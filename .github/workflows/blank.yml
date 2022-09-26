@@ -10,17 +10,18 @@ jobs:
       matrix:
         dotnet-version: [ '3.0', '3.1.x', '5.0.x' ]
 
-  
-
-
-- uses: actions/checkout@v3
-- name: Setup dotnet
-  uses: actions/setup-dotnet@v2
-  with:
-    dotnet-version: '3.1.x'
-- name: Install dependencies
-  run: dotnet restore
-- name: Build
-  run: dotnet build
-- name: Test with the dotnet CLI
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      # You can test your matrix by printing the current dotnet version
+      - name: Display dotnet version
+        run: dotnet --version
+      run: dotnet restore
+      - name: Build
+      run: dotnet build
+      - name: Test with the dotnet CLI
   run: dotnet test
+   
